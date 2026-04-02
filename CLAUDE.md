@@ -61,6 +61,38 @@ Types → Config → Models → Repositories → Services → Routes/UI
 4. 불변조건은 린터/테스트로 강제, 문서만으로는 불충분
 5. 에이전트가 읽기 쉬운 코드 > 사람의 문체 선호
 
+## 세션 & 모델 가이드
+
+> Claude Desktop이 아닌 **CLI(`claude`)를 사용한다.** 세션마다 모델을 지정할 수 있고 `/model`로 전환 가능.
+
+### 스킬별 권장 모델
+
+| 단계 | 스킬 | 모델 | 이유 |
+|------|------|------|------|
+| 기획/전략 | `/office-hours`, `/plan-ceo-review`, `/autoplan` | `opus` | 깊은 추론, 전제 도전, 창의적 사고 |
+| 아키텍처 | `/plan-eng-review` | `opus` | 복잡한 시스템 설계, 엣지케이스 분석 |
+| 디자인 | `/design-consultation`, `/design-review` | `opus` | 미적 판단, 디자인 시스템 설계 |
+| 보안 | `/cso` | `opus` | 공격 벡터 추론, 위협 모델링 |
+| **구현** | **BUILD** | `sonnet` | 속도 + 충분한 코딩 능력, 비용 효율 |
+| 코드 리뷰 | `/review` | `sonnet` | diff 분석은 빠른 모델로 충분 |
+| QA | `/qa`, `/qa-only`, `/benchmark` | `sonnet` | 반복적 테스트, 속도 우선 |
+| 배포/문서 | `/ship`, `/document-release`, `/retro` | `sonnet` | 정형화된 워크플로 |
+
+### 세션 시작 명령어
+
+```bash
+# 기획/아키텍처/디자인/보안 세션
+claude --model opus
+
+# 구현/리뷰/QA/배포 세션
+claude --model sonnet
+```
+
+### 원칙
+- 스킬 특성상 세션을 분리하는 것이 컨텍스트 관리에 유리
+- 한 세션에서 하나의 스킬(또는 연관된 2-3개 스킬)만 실행
+- 디자인 문서, 체크포인트 등은 `~/.gstack/projects/`에 자동 저장되어 세션 간 공유
+
 ## Skill routing
 
 When the user's request matches an available skill, ALWAYS invoke it using the Skill
