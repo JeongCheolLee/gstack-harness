@@ -1,12 +1,12 @@
 # TODOS
 
-## BLOCKER: API Terms of Service 확인
-- **What:** OpenAI, Anthropic, Google API 이용약관에서 (1) 모델 출력물 상업적 재배포, (2) 모델 브랜드명을 경쟁적 맥락에서 사용, (3) "대결" 형식의 사용 허용 여부 확인
-- **Why:** 약관 위반 시 API 키 정지 또는 법적 문제. 코드 작성 전에 확인 필수.
-- **Pros:** 위험 사전 차단
-- **Cons:** 확인에 시간 소요 (1-2시간)
-- **Context:** 디자인 문서에서 BLOCKER로 지정. LMSYS Chatbot Arena 같은 선례가 있으므로 허용될 가능성 높지만, 브랜드명 사용과 "대결" 프레이밍이 다를 수 있음.
-- **Depends on:** 없음 (빌드 전 최우선)
+## ~~BLOCKER: API Terms of Service 확인~~ ✅ RESOLVED (2026-04-02)
+- **결과:** 세 provider 모두 허용 확인.
+  - OpenAI: 출력물 소유권 사용자, 상업적 사용 가능. 경쟁 AI 학습만 금지.
+  - Anthropic: 출력물 소유권 사용자, 상업적 사용 가능. API 래퍼(passthrough) 금지만 해당.
+  - Google Gemini: 유료 티어 사용 시 출력물 소유권 사용자. 무료 티어는 학습에 사용됨.
+  - 선례: LMSYS Chatbot Arena가 동일한 방식으로 OpenAI/Anthropic/Google과 파트너십 운영 중.
+- **주의사항:** Google Gemini는 반드시 유료 티어(pay-as-you-go) 사용할 것.
 
 ## CI/CD 파이프라인 자동화
 - **What:** GitHub Actions → fly deploy 자동 배포 파이프라인 구축
